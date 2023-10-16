@@ -1,0 +1,203 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Mobile App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+
+    <style>
+        /* Additional styles for the iPhone frame */
+        .iphone-frame {
+            max-width: 800px; /* iPhone width */
+            margin: 0 auto;   /* Center the frame */
+            padding: 20px;    /* Add padding for aesthetics */
+            border: 16px solid #000; /* Black border to simulate the iPhone frame */
+            border-radius: 20px;    /* Round the corners */
+            background-color: #fff; /* Set background color */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Add a subtle shadow */
+        }
+
+        /* Additional styles for the centered inputs */
+        .centered-inputs {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        /* Additional styles for the big green login button */
+        .login-btn {
+            margin-top: 20px;
+        }
+        #itemList {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .item {
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .removeBtn {
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .info-container {
+            max-width: 400px;
+            margin: 50px auto;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .edit-toggle {
+            display: flex;
+            align-items: center;
+        }
+
+        .edit-toggle input {
+            margin-left: 10px;
+        }
+
+        .btn-container {
+            margin-top: 20px;
+        }
+    </style>
+    </style>
+</head>
+<body>
+
+    <div class="container mt-5">
+        <nav>
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/reports">Reports</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/tab2">Tab 2</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <h1 class="text-center" >Welcome to eBerichstheft</h1>
+    <div class="iphone-frame mt-5">
+       
+        
+
+
+
+
+        
+
+        <div class="container mt-3">
+            {% block content %}{% endblock %}
+        </div>
+
+        <footer class="footer mt-5">
+            <div class="container">
+                <p class="text-center"> DeSchiBel 2023</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const newItemInput = document.getElementById('newItemInput');
+            const itemList = document.getElementById('itemList');
+    
+            newItemInput.addEventListener('keyup', function (event) {
+                if (event.key === 'Enter' && newItemInput.value.trim() !== '') {
+                    addItem(newItemInput.value.trim());
+                    newItemInput.value = '';
+                }
+            });
+    
+            function addItem(text) {
+                const listItem = document.createElement('li');
+                listItem.className = 'item';
+                listItem.innerHTML = `
+                    ${text}
+                    <input type="button" class="removeBtn" onclick="removeItem(this)" value="❌"/>
+                `;
+                itemList.appendChild(listItem);
+            }
+    
+            window.removeItem = function (btn) {
+                const listItem = btn.closest('.item');
+                itemList.removeChild(listItem);
+            };
+        });
+       
+
+        $(document).ready(function () {
+        // Enable editing on button click
+        $('#editName, #editEmail').on('click', function () {
+            var fieldId = $(this).attr('id').replace('edit', '').toLowerCase();
+            var fieldElement = $('#' + fieldId);
+            fieldElement.prop('contenteditable', true).focus();
+            $('#saveBtn').show();
+        });
+
+        // Save changes
+        $('#saveBtn').on('click', function () {
+            $('[contenteditable="true"]').prop('contenteditable', false);
+            $(this).hide();
+        });
+
+        // Export data
+        $('#exportBtn').on('click', function () {
+            alert('Exporting user data...');
+        });
+
+        // Change password
+        function changePassword() {
+            var currentPassword = $('#currentPassword').val();
+            var newPassword = $('#newPassword').val();
+            // Implement logic to change password here
+            alert('Password changed successfully!');
+        }
+    });
+    function goBack() {
+            window.history.back();
+        }
+
+
+
+    function saveChanges() {
+        // Logic to save changes (e.g., update data in the backend)
+        alert('Changes saved successfully!');
+    }
+
+    function exportData() {
+        // Logic to export user data
+        alert('Exporting user data...');
+    }
+
+    function changePassword() {
+        // Logic to change the user's password
+        alert('Password changed successfully!');
+    }
+</script>
+
+</body>
+</html>
