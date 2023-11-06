@@ -1,0 +1,177 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="container mt-3">
+    <form id="taskForm" method="post" action="{% if report %}/update_report/{{ report.id }}{% else %}/add_report{% endif %}">
+    <div class="d-flex justify-content-between align-items-center">
+        <button type="button" class="btn btn-primary" onclick="goBack()">Back</button>
+        <h2 class="mb-0 text-center">eBerichstheft</h2>
+        <a type="button" class="btn btn-primary" href="/userpage">User</a>
+    </div>
+
+    <div class="container">
+        <div class="row">
+          <div class="col-3">
+          </div>
+          <div class="col-6">
+            <div class="btn-group">
+                <button type="button" class="btn btn-outline-primary">Prev</button>
+                <button type="button" class="btn btn-primary">Week no. 01.01 - 08.01</button>
+                <button type="button" class="btn btn-outline-primary">Next</button>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="d-flex flex-wrap">
+                <button id="save" type="submit" name="save_report" title="Speichern" class="btn btn-outline-primary mr-1">💾</button>
+               
+                <button id="edit" title="Bearbeiten" class="btn btn-outline-primary mr-1">✏️</button>
+                <button id="print" title="Ausdrucken" class="btn btn-outline-primary mr-1">🖨️</button>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-6">
+                <!--<p>Name: Johnas Mücke</p>-->
+                <div class="form-group">
+                    <label for="title">Title:</label>
+                    <input type="text" class="form-control" id="title" name="title" value="{{ report.title if report else '' }}">
+                </div>
+                <div class="form-group">
+                    <label for="department">Department:</label>
+                    <input type="text" class="form-control" id="department" name="department" value="{{ report.department if report else '' }}">
+                </div>
+            </div>
+            <div class="col-md-6">
+               
+                    <div class="form-group">
+                        <label for="fromDate">From:</label>
+                        <input type="date" class="form-control" id="fromDate" name="fromDate" value="{{ report.fromDate.strftime('%Y-%m-%d') if report and report.fromDate else '' }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="toDate">To:</label>
+                        <input type="date" class="form-control" id="toDate" name="toDate" value="{{ report.toDate.strftime('%Y-%m-%d') if report and report.toDate else '' }}">
+                    </div>
+                    
+              
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-3">
+        <div class="col">
+            
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="rotate-text">Day</th>
+                            <th scope="col">Tasks</th>
+                            <th scope="col">St.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="rotate-text">Monday</td>
+                            <td>
+                                <textarea class="form-control" name="monday_tasks" rows="3" placeholder="Enter tasks">{{ report.monday_tasks if report else '' }}</textarea>
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" name="monday_hours" value="{{ report.monday_hours if report else '8' }}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="rotate-text">Tuesday</td>
+                            <td>
+                                <textarea class="form-control" name="tuesday_tasks" rows="3" placeholder="Enter tasks">{{ report.tuesday_tasks if report else '' }}</textarea>
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" name="tuesday_hours" value="{{ report.tuesday_hours if report else '8' }}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="rotate-text">Wednesday</td>
+                            <td>
+                                <textarea class="form-control" name="wednesday_tasks" rows="3" placeholder="Enter tasks">{{ report.wednesday_tasks if report else '' }}</textarea>
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" name="wednesday_hours" value="{{ report.wednesday_hours if report else '8' }}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="rotate-text">Thursday</td>
+                            <td>
+                                <textarea class="form-control" name="thursday_tasks" rows="3" placeholder="Enter tasks">{{ report.thursday_tasks if report else '' }}</textarea>
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" name="thursday_hours" value="{{ report.thursday_hours if report else '8' }}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="rotate-text">Friday</td>
+                            <td>
+                                <div>
+                                    <textarea class="form-control" name="friday_tasks" rows="3" placeholder="Enter tasks">{{ report.friday_tasks if report else '' }}</textarea>
+                                </div>
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" name="friday_hours" value="{{ report.friday_hours if report else '8' }}">
+                            </td>
+                        </tr>
+                      
+                    </tbody>
+                </table>
+                <!-- <button type="button" onclick="submitForm()">Submit Form</button> -->
+           
+            
+            <script>
+                function submitForm() {
+                    // Retrieve form data
+                    const form = document.getElementById('taskForm');
+                    const formData = new FormData(form);
+            
+                    // Convert FormData to JSON
+                    const json = {};
+                    formData.forEach((value, key) => {
+                        json[key] = value;
+                    });
+            
+                    // Convert JSON to string and log or send to the API
+                    const jsonString = JSON.stringify(json);
+                    console.log(jsonString);
+            
+                    // You can now send this JSON data to your API using fetch or any other method
+                }
+            </script>
+            
+            
+        </div>
+    </div>
+    
+    
+    <div class="container mt-3">
+        <!-- ... (previous content) ... -->
+        
+        <div class="row mt-3">
+            <div class="col">
+                <table class="table table-bordered">
+                    <!-- ... (previous table structure) ... -->
+                </table>
+            </div>
+        </div>
+    
+        <div class="row mt-3">
+            <div class="col">
+                <div class="form-group">
+                    <label for="digitalSignature">Digital Signature:</label>
+                    <input type="text" class="form-control" id="digitalSignature" placeholder="Enter your digital signature">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+</form>
+</div>
+{% endblock %}

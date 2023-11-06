@@ -6,50 +6,43 @@
         <div class="d-flex justify-content-between align-items-center">
             <button type="button" class="btn btn-primary" onclick="goBack()">Back</button>
             <h2 class="mb-0 text-center">All Reports</h2>
-            <a type="button" class="btn btn-primary" href="/userpage">User</a>
+            <a type="button" class="btn btn-primary" {% if username is defined %}
+                                                        href="/userpage"
+                                                            {% else %}
+                                                       href="/login"
+                                                            {% endif %}>
+                                                        
+                                                     {% if username is defined %}
+                                                                        {{ username }}
+                                                                    {% else %}
+                                                                        Log in
+                                                                    {% endif %}</a>
         </div>
-
+        
         <div class="text-center mt-4">
-            <a href="{{ url_for('newberichtsheft') }}" class="btn btn-success btn-lg btn-block">+</a>
+            <a href="{{ url_for('add_new_report') }}" class="btn btn-success btn-lg btn-block">+</a>
         </div>
 
-        <div class="mt-4">
-            
-        </div>
+
 
         <table class="table" >
             <tbody >
-                <tr>
-                    <td>2023<br>
-                        KW24</td>
-                    <td>Berichtsheft Nr. 106</td>
-                    <td><a href="{{ url_for('newberichtsheft') }}" >✏️</a></td>
-                </tr>
-                <tr>
-                    <td>2023<br>
-                        KW23</td>
-                    <td>Berichtsheft Nr. 105</td>
-                    <td><a href="{{ url_for('newberichtsheft') }}" >⏳</a></td>
-                </tr>
-                <tr>
-                    <td>2023<br>
-                        KW22</td>
-                    <td>Berichtsheft Nr. 104</td>
-                    <td>✅</td>
-                </tr>
-                <tr>
-                    <td>2023<br>
-                        KW21</td>
-                    <td>Berichtsheft Nr. 103</td>
-                    <td>✅</td>
-                </tr>
-                <tr>
-                    <td>2023<br>
-                        KW20</td>
-                    <td>Berichtsheft Nr. 102</td>
-                    <td>✅</td>
-                </tr>
-                <!-- Add more rows as needed -->
+                <hr>
+                {% for report in reports %}
+            
+            <tr>
+                <td>{{ report.fromDate }}<br>
+                    KW{{ report.id }}</td>
+                <td>{{ report.title }}</td>
+                <td>
+                    <a href="{{ url_for('view_report', report_id=report.id) }}" title="Read">📖</a> 
+                    <a href="{{ url_for('update_existing_report', report_id=report.id) }}" title="Edit">♻️</a>
+                    <a href="{{ url_for('delete_existing_report', report_id=report.id) }}" title="Delete">❌</a>
+                
+            </tr>
+            
+            {% endfor %}
+               
             </tbody>
         </table>
     </div>
