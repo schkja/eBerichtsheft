@@ -61,8 +61,44 @@ class Status(Base):
 engine = create_engine('sqlite:///eBerichtsheft.db', echo=True)
 Base.metadata.create_all(engine)
 
+
+
 Session = sessionmaker(bind=engine)
 session = Session()
+
+# Populate the Status table when the app is first created
+with app.app_context():
+        # Check if the statuses are already populated
+    if session.query(Status).count()  == 0:
+        # Define the initial statuses
+        initial_statuses = [
+            {'name': 'New'},
+            {'name': 'In Progress'},
+            {'name': 'Declined'},
+            {'name': 'Accepted'},
+        ]
+    
+        # Add statuses to the database
+        for status_data in initial_statuses:
+            new_status = Status(**status_data)
+            session.add(new_status)
+        session.commit()
+    if session.query(Role).count()  == 0:
+        # Define the initial roles
+        initial_roles = [
+            {'role': 'Azubi'},
+            {'role': 'Ausbilder'},
+            {'role': 'Lehrer'},
+            {'role': 'IHK'},
+        ]
+
+        # Add roles to the database
+        for role_data in initial_roles:
+            new_role = Role(**role_data)
+            session.add(new_role)
+
+        session.commit()
+
 
 #@app.route('/')
 #def index():
@@ -112,6 +148,7 @@ def user_report_books(user_id):
 
 @app.route('/add_user', methods=['GET', 'POST'])
 def add_user():
+    roles = session.query(Role).all()
     if request.method == 'POST':
         data = {
             'role_id': request.form.get('role_id'),
@@ -126,7 +163,7 @@ def add_user():
         session.commit()
         return redirect(url_for('users'))
 
-    return render_template('add_user.html')
+    return render_template('add_user.html', roles=roles)
 
 
 @app.route('/edit_user/<int:user_id>', methods=['GET', 'POST'])
@@ -134,6 +171,7 @@ def edit_user(user_id):
     user = session.query(User).get(user_id)
     if not user:
         abort(404)
+    roles = session.query(Role).all()
 
     if request.method == 'POST':
         updated_data = {
@@ -150,7 +188,7 @@ def edit_user(user_id):
         print(updated_data)
         return redirect(url_for('users'))
 
-    return render_template('edit_user.html', user=user)
+    return render_template('edit_user.html', user=user, roles=roles)
 
 @app.route('/delete_user/<int:user_id>')
 def delete_user(user_id):
@@ -247,6 +285,8 @@ def add_report(user_id, reportBook_id):
     report_book = session.query(ReportBook).get(reportBook_id)
     if not report_book:
         abort(404)
+    # Get the available statuses
+    statuses = session.query(Status).all()
 
     if request.method == 'POST':
         data = {
@@ -263,12 +303,24 @@ def add_report(user_id, reportBook_id):
         session.commit()
         return redirect(url_for('user_report_books', user_id=user_id))
 
-    return render_template('edit_report.html', user=user, report_book=report_book)
+    return render_template('edit_report.html', user=user, report_book=report_book, statuses=statuses)
 
 @app.route('/edit_report/<int:report_id>', methods=['GET', 'POST'])
 def edit_report(report_id):
-    report = session.query(Report).get(report_id)
+    report = session.query(Report).join(Status).filter(Report.report_id == report_id).first()
+
+    # Get the available statuses
+    statuses = session.query(Status).all()
+    #report = session.query(Report).get(report_id)
     if not report:
+        abort(404)
+
+    user_id = request.args.get('user_id')
+    #print('hello'+user_id)
+    #user_id = request.args["user_id"] #kinda the same
+    user = session.query(User).get(user_id)
+    print(user)
+    if not user:
         abort(404)
 
     if request.method == 'POST':
@@ -281,15 +333,16 @@ def edit_report(report_id):
             'thu': request.form.get('thu'),
             'fri': request.form.get('fri'),
         }
-        print(updated_data)
+        print('hello')
+        print(updated_data['status_id'])
         for key, value in updated_data.items():
             setattr(report, key, value)
         session.commit()
         #return redirect(url_for('user_report_books', user_id=report.report_book.user_id))
-        return render_template('edit_report.html', report=report, onlyread=True)
+        return render_template('edit_report.html', report=report, onlyread=True, user=user, statuses=statuses)
 
 
-    return render_template('edit_report.html', report=report)
+    return render_template('edit_report.html', report=report, user=user, statuses=statuses)
 
 
 @app.route('/view_report/<int:report_id>', methods=['GET', 'POST'])
@@ -297,6 +350,14 @@ def view_report(report_id):
     report = session.query(Report).get(report_id)
     if not report:
         abort(404)
+    user_id = request.args.get('user_id')
+    #user_id = request.args["user_id"] #kinda the same
+    # Get the available statuses
+    statuses = session.query(Status).all()
+    user = session.query(User).get(user_id)
+    if not user:
+        abort(404)
+    
 
     if request.method == 'POST':
         # updated_data = {
@@ -311,9 +372,9 @@ def view_report(report_id):
         # for key, value in updated_data.items():
         #     setattr(report, key, value)
         # session.commit()
-        return redirect(url_for('user_report_books', user_id=report.report_book.user_id))
+        return redirect(url_for('user_report_books', user_id=user_id))
 
-    return render_template('edit_report.html', report=report, onlyread=True)
+    return render_template('edit_report.html', report=report, onlyread=True, user=user, statuses=statuses)
 
 @app.route('/delete_report/<int:report_id>')
 def delete_report(report_id):
