@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Report</title>
+</head>
+
+<!-- add_report.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- ... (other head elements) -->
+</head>
+<body>
+    <h1>Add Report for {{ user.surname }} {{ user.lastname }}</h1>
+
+    <form method="post" action="{{ url_for('add_report', user_id=user.user_id, reportBook_id=report_book.reportBook_id) }}">
+        <label for="status_id">Status ID:</label>
+        <input type="number" name="status_id" required><br>
+
+        <label for="calenderweek">Calenderweek:</label>
+        <input type="date" name="calenderweek" required><br>
+
+        <label for="mon">Mon:</label>
+        <textarea name="mon"></textarea><br>
+
+        <label for="tue">Tue:</label>
+        <textarea name="tue"></textarea><br>
+
+        <label for="wed">Wed:</label>
+        <textarea name="wed"></textarea><br>
+
+        <label for="thu">Thu:</label>
+        <textarea name="thu"></textarea><br>
+
+        <label for="fri">Fri:</label>
+        <textarea name="fri"></textarea><br>
+
+        <input type="submit" value="Add Report">
+    </form>
+
+    <a href="{{ url_for('user_report_books', user_id=user.user_id) }}">Back to User Reports</a>
+</body>
+</html>

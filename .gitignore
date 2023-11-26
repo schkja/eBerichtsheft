@@ -1,0 +1,4 @@
+venv/
+eBerichtsheft.db
+legacy/
+.DS_Store

@@ -1,0 +1,111 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<form method="post" action="{{ url_for('edit_user', user_id=user.user_id) }}">
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center">
+        <button type="button" class="btn btn-primary" onclick="goBack()">Back</button>
+        <h2 class="mb-0 text-center">User Information</h2>
+        <a type="button" class="btn btn-primary" href="/login" >Log out</a>
+    </div>
+    <!-- <div class="form-group row mt-3">
+        <label for="name" class="col-sm-2 col-form-label">Name:</label>
+        <div class="col-sm-8">
+            <div class="input-group">
+                <span class="form-control" id="name">{{ user.email }}</span>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" id="editName">Change</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="email" class="col-sm-2 col-form-label">Email:</label>
+        <div class="col-sm-8">
+            <div class="input-group">
+                <span class="form-control" id="email">{{ user.email }}</span>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" id="editEmail">Change</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-8 offset-sm-2">
+            <button class="btn btn-primary" type="button" id="saveBtn" style="display: none;">Save Changes</button>
+            <button class="btn btn-success" type="button" id="exportBtn">Export My Data</button>
+        </div>
+    </div> -->
+
+    <!-- <div class="form-group row" id="changePasswordSection">
+
+        <div class="col-sm-8 offset-sm-2">
+
+            <label for="currentPassword">Current Password:</label>
+            <input type="password" class="form-control" id="currentPassword" required>
+            <label for="newPassword">New Password:</label>
+            <input type="password" class="form-control" id="newPassword" required>
+            <button class="btn btn-warning mt-2" type="button" onclick="changePassword()">Change Password</button>
+        </div>
+    </div> -->
+</div>
+<div class="container mt-5">
+   
+        <div class="form-group row">
+            <label for="role_id" class="col-sm-2 col-form-label">Role ID:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="role_id" name="role_id" value="{{ user.role_id }}" required>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="surname" class="col-sm-2 col-form-label">Surname:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="surname" name="surname" value="{{ user.surname }}" required>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="lastname" class="col-sm-2 col-form-label">Lastname:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="lastname" name="lastname" value="{{ user.lastname }}" required>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="email" class="col-sm-2 col-form-label">Email:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="email" name="email" value="{{ user.email }}" required>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="firm" class="col-sm-2 col-form-label">Firm:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="firm" name="firm" value="{{ user.firm }}" required>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="studyclass" class="col-sm-2 col-form-label">Class:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="studyclass" name="studyclass" value="{{ user.studyclass }}" required>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-10 offset-sm-2">
+                <input type="submit" class="btn btn-primary" value="Update User">
+                <a href="{{ url_for('users') }}" class="btn btn-secondary">Back to Users</a>
+            </div>
+        </div>
+  
+</div>
+</form>
+
+
+{% endblock %}
+
+

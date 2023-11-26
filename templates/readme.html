@@ -1,0 +1,68 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<div class="container ">
+    <div class="jumbotron">
+        <h1 class="display-4">eBerichtsheft</h1>
+        <p class="lead">Kurzbeschreibung</p>
+    </div>
+
+    <div class="row">
+        <div class="">
+            <h2>Inhaltsverzeichnis</h2>
+            <ul>
+                <li><a href="#getting-started">Erste Schritte</a></li>
+                <ul>
+                    <li><a href="#prerequisites">Voraussetzungen</a></li>
+                    <li><a href="#installation">Installation</a></li>
+                </ul>
+                <li><a href="#usage">Verwendung</a></li>
+                
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="">
+            <h2 id="getting-started">Erste Schritte</h2>
+
+            <h3 id="prerequisites">Voraussetzungen</h3>
+            <p>Liste aller Software, Bibliotheken oder Dienste, die der Benutzer vor der Verwendung Ihres Projekts
+                installieren muss.</p>
+            <pre><code>Beispiel:
+            - Python 3.6 oder höher
+            - Flask-Framework
+            - SQLite-Datenbank</code></pre>
+
+            <h3 id="installation">Installation</h3>
+            <p>Schritt-für-Schritt-Anleitung zur Installation und Konfiguration Ihres Projekts.</p>
+            <pre><code># Beispiel für ein Python-Projekt mit virtueller Umgebung
+git clone https://github.com/schkja/eBerichtsheft.git
+cd yourproject
+python -m venv venv
+source venv/bin/activate  # Auf Windows: .\venv\Scripts\activate
+pip install -r requirements.txt
+python app.py</code></pre>
+        </div>
+    </div>
+    <div class="row">
+        <div class="">
+            <h2 id="usage">Verwendung</h2>
+            <p>Um das Projekt zu verwenden, navigieren Sie zu [http://localhost:5041/](http://localhost:5041/) und melden Sie sich mit den folgenden Zugangsdaten an:</p>
+            <ul>
+                <li>Benutzername: 'user1@bla.bla'</li>
+                <li>Passwort: 'password'</li>
+            </ul>
+        </div>
+    </div>
+
+
+    <a href="{{ url_for('login') }}"
+    class="btn btn-success btn-lg btn-block">Log in</a>
+</div>
+
+
+
+
+{% endblock %}

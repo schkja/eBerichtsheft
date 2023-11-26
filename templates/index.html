@@ -84,19 +84,18 @@
     <div class="container mt-5">
         <nav>
             <ul class="nav nav-tabs">
+                <!-- Ich habe das nur für testing benutzt -->
+                <!-- <li class="nav-item">
+                    <a class="nav-link" href="/login">Read me</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/login">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/reports">Reports</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/tab2">Tab 2</a>
-                </li>
+                </li> -->
+                
             </ul>
         </nav>
     </div>
-    <h1 class="text-center" >Welcome to eBerichstheft</h1>
+    <h1 class="text-center" >eBerichstheft</h1>
     <div class="iphone-frame mt-5">
        
         
@@ -112,7 +111,7 @@
 
         <footer class="footer mt-5">
             <div class="container">
-                <p class="text-center"> DeSchiBel 2023</p>
+                <p class="text-center" data-toggle="tooltip" data-placement="top" title="Deger&#13;Schich&#13;Belonozhkin"> &#xa9; DeSchiBel GmbH 2023</p>
             </div>
         </footer>
     </div>
@@ -121,37 +120,37 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const newItemInput = document.getElementById('newItemInput');
-            const itemList = document.getElementById('itemList');
+        // document.addEventListener('DOMContentLoaded', function () {
+        //     const newItemInput = document.getElementById('newItemInput');
+        //     const itemList = document.getElementById('itemList');
     
-            newItemInput.addEventListener('keyup', function (event) {
-                if (event.key === 'Enter' && newItemInput.value.trim() !== '') {
-                    addItem(newItemInput.value.trim());
-                    newItemInput.value = '';
-                }
-            });
+        //     newItemInput.addEventListener('keyup', function (event) {
+        //         if (event.key === 'Enter' && newItemInput.value.trim() !== '') {
+        //             addItem(newItemInput.value.trim());
+        //             newItemInput.value = '';
+        //         }
+        //     });
     
-            function addItem(text) {
-                const listItem = document.createElement('li');
-                listItem.className = 'item';
-                listItem.innerHTML = `
-                    ${text}
-                    <input type="button" class="removeBtn" onclick="removeItem(this)" value="❌"/>
-                `;
-                itemList.appendChild(listItem);
-            }
+        //     function addItem(text) {
+        //         const listItem = document.createElement('li');
+        //         listItem.className = 'item';
+        //         listItem.innerHTML = `
+        //             ${text}
+        //             <input type="button" class="removeBtn" onclick="removeItem(this)" value="❌"/>
+        //         `;
+        //         itemList.appendChild(listItem);
+        //     }
     
-            window.removeItem = function (btn) {
-                const listItem = btn.closest('.item');
-                itemList.removeChild(listItem);
-            };
-        });
+        //     window.removeItem = function (btn) {
+        //         const listItem = btn.closest('.item');
+        //         itemList.removeChild(listItem);
+        //     };
+        // });
        
 
         $(document).ready(function () {
         // Enable editing on button click
-        $('#editName, #editEmail').on('click', function () {
+        $('#editName, #editSurname, #editFirm, #editClass').on('click', function () {
             var fieldId = $(this).attr('id').replace('edit', '').toLowerCase();
             var fieldElement = $('#' + fieldId);
             fieldElement.prop('contenteditable', true).focus();

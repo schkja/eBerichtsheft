@@ -1,4 +1,6 @@
-#!/Users/macbook/repos/mobileappflask/venv/bin/python3
+#!/bin/sh
+'''exec' "/Users/macbook/repos/new /venv/bin/python3" "$0" "$@"
+' '''
 # -*- coding: utf-8 -*-
 import re
 import sys

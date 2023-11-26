@@ -1,12 +1,13 @@
+#Activate venv with 
+venv erstellen 
+`venv venv`
+`source venv/bin/activate`   On Windows, use `venv\Scripts\activate`
+launch app
+'python app.py'
 
-python3 -m venv venv
-source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
-python app.py
+Zugangsdaten:
+Username: 'user1@bla.bla' 
+Password: 'password'
 
-dann sieht ihr alles unter 0.0.0.0:5000
+dann sieht ihr alles unter localhost:5041
 
-
-# Migrate every time i add some new properties
-flask db init
-flask db migrate -m "da schreibe ich meine nachrichten"
-flask db upgrade

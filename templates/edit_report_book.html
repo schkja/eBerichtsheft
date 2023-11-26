@@ -1,0 +1,20 @@
+<html lang="en">
+    <head>
+        <!-- ... (other head elements) -->
+    </head>
+    <body>
+        <h1>Edit Report Book for {{ user.surname }} {{ user.lastname }}</h1>
+    
+        <form method="post" action="{{ url_for('edit_report_book', user_id=user.user_id, reportBook_id=report_book.reportBook_id) }}">
+            <label for="start">Start Date:</label>
+            <input type="date" name="start" value="{{ report_book.start }}" required><br>
+    
+            <label for="end">End Date:</label>
+            <input type="date" name="end" value="{{ report_book.end }}" required><br>
+    
+            <input type="submit" value="Update Report Book">
+        </form>
+    
+        <a href="{{ url_for('user_report_books', user_id=user.user_id) }}">Back to User Reports</a>
+    </body>
+    </html>

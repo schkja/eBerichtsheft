@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Report</title>
+</head>
+<body>
+    <h1>Edit Report</h1>
+
+    <form method="post" action="{{ url_for('edit_report', report_id=report.report_id) }}">
+        <label for="status_id">Status ID:</label>
+        <input type="text" name="status_id" value="{{ report.status_id }}" required><br>
+
+        <label for="reportBook_id">Report Book ID:</label>
+        <input type="text" name="reportBook_id" value="{{ report.reportBook_id }}" required><br>
+
+        <label for="calenderweek">Calendar Week:</label>
+        <input type="date" name="calenderweek" value="{{ report.calenderweek|default('') }}" required><br>
+
+        <label for="mon">Mon:</label>
+        <textarea name="mon">{{ report.mon|default('') }}</textarea><br>
+
+        <label for="tue">Tue:</label>
+        <textarea name="tue">{{ report.tue|default('') }}</textarea><br>
+
+        <label for="wed">Wed:</label>
+        <textarea name="wed">{{ report.wed|default('') }}</textarea><br>
+
+        <label for="thu">Thu:</label>
+        <textarea name="thu">{{ report.thu|default('') }}</textarea><br>
+
+        <label for="fri">Fri:</label>
+        <textarea name="fri">{{ report.fri|default('') }}</textarea><br>
+
+        <input type="submit" value="Update Report">
+    </form>
+
+    <a href="{{ url_for('reports') }}">Back to Reports</a>
+</body>
+</html>

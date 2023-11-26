@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports</title>
+</head>
+<body>
+    <h1>Reports</h1>
+    
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Status ID</th>
+            <th>Report Book ID</th>
+            <th>Calendar Week</th>
+            <th>Mon</th>
+            <th>Tue</th>
+            <th>Wed</th>
+            <th>Thu</th>
+            <th>Fri</th>
+            <th>Actions</th>
+        </tr>
+        {% for report in reports %}
+        <tr>
+            <td>{{ report.report_id }}</td>
+            <td>{{ report.status_id }}</td>
+            <td>{{ report.reportBook_id }}</td>
+            <td>{{ report.calenderweek }}</td>
+            <td>{{ report.mon }}</td>
+            <td>{{ report.tue }}</td>
+            <td>{{ report.wed }}</td>
+            <td>{{ report.thu }}</td>
+            <td>{{ report.fri }}</td>
+            <td>
+                <a href="{{ url_for('edit_report', report_id=report.report_id) }}">Edit</a>
+                <a href="{{ url_for('delete_report', report_id=report.report_id) }}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+    <a href="{{ url_for('add_report', report_id=report.report_id) }}">Add a new report</a>
+</body>
+</html>
