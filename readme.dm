@@ -1,7 +1,8 @@
 #Activate venv with 
 venv erstellen 
-`venv venv`
+`python3 -m venv venv`
 `source venv/bin/activate`   On Windows, use `venv\Scripts\activate`
+`pip install -r requirements.txt`
 launch app
 'python app.py'
 

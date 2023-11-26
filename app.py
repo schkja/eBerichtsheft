@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for, abort 
+from flask import Flask, render_template, request, redirect, url_for, abort, make_response
 from sqlalchemy import create_engine, Column, Integer, String, Date, ForeignKey, Text
 from sqlalchemy.orm import declarative_base, relationship, sessionmaker
+from flask_weasyprint import HTML, render_pdf
 from datetime import datetime
 
 app = Flask(__name__)
@@ -345,6 +346,34 @@ def edit_report(report_id):
     return render_template('edit_report.html', report=report, user=user, statuses=statuses)
 
 
+# this function is still in development
+@app.route('/view_report/<int:report_id>/pdf')
+def view_report_pdf(report_id):
+    # Fetch the report and other necessary data
+    report = session.query(Report).get(report_id)
+    if not report:
+        abort(404)
+    user_id = request.args.get('user_id')
+    #user_id = request.args["user_id"] #kinda the same
+    # Get the available statuses
+    statuses = session.query(Status).all()
+    user = session.query(User).get(user_id)
+    if not user:
+        abort(404)
+    # Render the PDF template
+    # The template can be anything
+    html = render_template('edit_report.html', report=report,  onlyread=True, user=user, statuses=statuses)
+
+    # Generate the PDF
+    pdf = HTML(string=html).write_pdf()
+
+    # Create a response with the PDF
+    response = make_response(pdf)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] = f'inline; filename=view_report_{report_id}.pdf'
+
+    return response
+
 @app.route('/view_report/<int:report_id>', methods=['GET', 'POST'])
 def view_report(report_id):
     report = session.query(Report).get(report_id)
@@ -358,7 +387,7 @@ def view_report(report_id):
     if not user:
         abort(404)
     
-
+    
     if request.method == 'POST':
         # updated_data = {
         #     'status_id': int(request.form.get('status_id')),
@@ -389,6 +418,11 @@ def delete_report(report_id):
 
     # Handle the case where the report is not found
     return "Report not found", 404
+
+# Custom error handler for 404 Not Found
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 
 if __name__ == '__main__':
