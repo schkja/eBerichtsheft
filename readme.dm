@@ -10,5 +10,8 @@ Zugangsdaten:
 Username: 'user1@bla.bla' 
 Password: 'password'
 
+
+'multi-user geschichte ist noch nicht vollständig implementiert'
+
 dann sieht ihr alles unter localhost:5041
 
