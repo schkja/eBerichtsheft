@@ -6,9 +6,30 @@
 <!-- <h1>Users</h1> -->
 {% if  users %}
 {% for user in users %}
-    
+    <div class="row">
+        <div class="col-md-2">
+            <!-- leer -->
+        </div>
+        <div class="col-md-8">
+            <h2>eBerichtsheft von {{ user.surname }} {{ user.lastname }}</h2>
+        </div>
+        <div class="col-md-2">
+            <div class="btn-group">
+                <button type="button" class="btn btn-info dropdown-toggle" title="Action" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    ⚙️
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{{ url_for('edit_user', user_id=user.user_id) }}">Edit personal data</a>
+                    <a class="dropdown-item   " href="{{ url_for('login', user_id=user.user_id) }}">Logout</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item btn-danger" href="{{ url_for('delete_user', user_id=user.user_id) }}">Delete my account</a>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="centered-inputs">
-        <h1>eBerichtsheft von {{ user.surname }} {{ user.lastname }}</h1>
+        <!-- <h1>eBerichtsheft von {{ user.surname }} {{ user.lastname }}</h1> -->
         <div class="form-group">
             <!-- <label for="emailText">User ID: {{ user.user_id }}</label> -->
         </div>
@@ -19,14 +40,13 @@
              
 
                     <a class="btn btn-outline-primary mr-1" href="{{ url_for('user_report_books', user_id=user.user_id) }}">View report book</a> 
-                    <a class="btn btn-outline-warning mr-1" href="{{ url_for('edit_user', user_id=user.user_id) }}">Edit personal data</a>
-                    <a class="btn btn-outline-danger mr-1" href="{{ url_for('delete_user', user_id=user.user_id) }}">Delete my account</a>
+                    
                   
 
       
 
         </div>
-        <a class="btn btn-danger mt-5 mr-1" href="{{ url_for('login', user_id=user.user_id) }}">Logout</a>
+        
 
 
        

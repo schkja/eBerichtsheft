@@ -17,16 +17,15 @@
         <div class="row mt-3">
           <div class="col-3">
           </div>
-          <div class="col-6">
-            {% if report %}<div class="btn-group">
-                
-                <a type="button" class="btn btn-outline-primary" href="{{ url_for('view_report', report_id=report.report_id-1) }}" title="Read">Prev</a> 
-                <button type="button" class="btn btn-primary" title="diese button macht nichts">Week no. 01.01 - 08.01</button>
-      
-                <a type="button" class="btn btn-outline-primary" href="{{ url_for('view_report', report_id=report.report_id+1) }}" title="Read">Next</a> 
+          <div class="col-6 text-center">
+            {% if report %}
+                <div class="btn-group">
+                    <a type="button" class="btn btn-outline-primary" href="{{ url_for('view_report', report_id=report.report_id-1) }}" title="Read">Prev</a> 
+                    <button type="button" class="btn btn-primary" title="diese button macht nichts">Bericht #<b>{{ report.report_id}}</b></button>
+                    <a type="button" class="btn btn-outline-primary" href="{{ url_for('view_report', report_id=report.report_id+1) }}" title="Read">Next</a> 
+                </div>
             {% endif %}
-            </div>
-          </div>
+        </div>
           <div {% if report %}class="col-3"{%else%}class="col-12"{% endif %}>
             <div class="d-flex flex-wrap justify-content-end align-items-end">
                 {% if not onlyread %}<button id="save" type="submit" name="save_report" title="Speichern" class="btn btn-outline-primary mr-1">💾</button>{% endif %}
@@ -41,7 +40,7 @@
                 
                 {% endif %}
                 {% if report %}
-                <a type="button" class="btn btn-outline-primary mr-1" id="print" title="Ausdrucken" href="{{ url_for('view_report_pdf', user_id=user_id, report_id=report.report_id) }}" target="_blank">🖨️</a>
+                <a type="button" class="btn btn-outline-primary mr-1" id="print" title="Ausdrucken" href="{{ url_for('view_report_pdf',  user_id=user.user_id, report_id=report.report_id) }}" target="_blank">🖨️</a>
                 {% endif %}
             </div>
           </div>

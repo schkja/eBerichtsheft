@@ -349,19 +349,25 @@ def edit_report(report_id):
 # this function is still in development
 @app.route('/view_report/<int:report_id>/pdf')
 def view_report_pdf(report_id):
+    print('try to print report')
     # Fetch the report and other necessary data
     report = session.query(Report).get(report_id)
+    print('reportfound')
     if not report:
         abort(404)
     user_id = request.args.get('user_id')
+    print('userfound')
     #user_id = request.args["user_id"] #kinda the same
     # Get the available statuses
     statuses = session.query(Status).all()
+    print('almost ready')
+    print(user_id)
     user = session.query(User).get(user_id)
     if not user:
         abort(404)
     # Render the PDF template
     # The template can be anything
+    #print('almost ready')
     html = render_template('edit_report.html', report=report,  onlyread=True, user=user, statuses=statuses)
 
     # Generate the PDF
