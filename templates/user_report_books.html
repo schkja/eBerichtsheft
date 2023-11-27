@@ -28,9 +28,33 @@
         {% if report_books %}
         <h1>eBerichsheft von {{ user.surname }} {{ user.lastname }}</h1>
         {% for report_book in report_books %}
-        <h2>Report Book {{ report_book.reportBook_id }}</h2>
+        <div class="row">
+            <div class="col-md-2">
+                <!-- leer -->
+            </div>
+            <div class="col-md-8">
+                <h2>Report Book {{ report_book.reportBook_id }}</h2>
+            </div>
+            <div class="col-md-2">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-info dropdown-toggle" title="Action" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        ⚙️
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{{ url_for('edit_report_book', user_id=user.user_id, reportBook_id=report_book.reportBook_id) }}">Edit Report Book</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ url_for('delete_report_book', user_id=user.user_id, reportBook_id=report_book.reportBook_id) }}">Delete Report Book</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if user %}
+        {% if user.role.role == 'Azubi'%}
         <a href="{{ url_for('add_report', user_id=user.user_id, reportBook_id=report_book.reportBook_id) }}"
             class="btn btn-success btn-lg btn-block">+</a>
+        {% endif %}
+        {% endif %}
+        
         <hr>
         {% for report in report_book.reports %}
         <div class="card    {% if report.status.name == 'New' %}border-info
@@ -39,6 +63,7 @@
                             {% elif report.status.name == 'Accepted' %}bg-success
                             {% else  %}
                             {% endif %} mb-3">
+                            
             <div class="card-header">KW{{ report.report_id }}</div>
             <div class="row no-gutters">
                 <!-- First column for information -->
@@ -62,11 +87,20 @@
                         <a class="btn btn-outline-primary mb-1"
                             href="{{ url_for('view_report', user_id=user.user_id, report_id=report.report_id) }}"
                             title="Read">📖</a>
-                        <a class="btn btn-outline-warning mb-1"
+                            {% if user %}
+                            {% if user.role.role == 'Azubi' or user.role.role == 'Ausbilder'%}
+                            <a class="btn btn-outline-warning mb-1"
                             href="{{ url_for('edit_report', user_id=user.user_id, report_id=report.report_id) }}"
                             title="Edit">✏️</a>
-                        <a class="btn btn-outline-danger" href="#" data-toggle="modal"
+                            {% endif %}
+                            {% endif %}
+                            {% if user %}
+                            {% if user.role.role == 'Azubi' %}
+                            <a class="btn btn-outline-danger" href="#" data-toggle="modal"
                             data-target="#deleteModal{{ report.report_id }}" title="Delete">❌</a>
+                            {% endif %}
+                            {% endif %}
+                       
                     </div>
                 </div>
             </div>
@@ -124,10 +158,7 @@
             </table> -->
 
 
-        <a href="{{ url_for('edit_report_book', user_id=user.user_id, reportBook_id=report_book.reportBook_id) }}">Edit
-            Report Book</a>
-        <a href="{{ url_for('delete_report_book', user_id=user.user_id, reportBook_id=report_book.reportBook_id) }}">Delete
-            Report Book</a>
+        
         {% endfor %}
         {% else %}
         <p style="color: red;">No report books available for <b>{{user.surname}} {{user.lastname}}</b> yet</p>

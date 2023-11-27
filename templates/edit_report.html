@@ -32,8 +32,13 @@
                 {% if not onlyread %}<button id="save" type="submit" name="save_report" title="Speichern" class="btn btn-outline-primary mr-1">💾</button>{% endif %}
                
                 {% if onlyread %}
-                <a type="button" id="edit" title="Bearbeiten"class="btn btn-outline-primary" href="{{ url_for('edit_report', user_id=user.user_id, report_id=report.report_id) }}" title="Read">✏️</a> 
+                {% if user %}
+                            {% if user.role.role == 'Azubi' or user.role.role == 'Ausbilder'%}
+                            <a type="button" id="edit" title="Bearbeiten"class="btn btn-outline-primary" href="{{ url_for('edit_report', user_id=user.user_id, report_id=report.report_id) }}" title="Edit">✏️</a> 
               
+                            {% endif %}
+                            {% endif %}
+                
                 {% endif %}
                 {% if report %}
                 <a type="button" class="btn btn-outline-primary mr-1" id="print" title="Ausdrucken" href="{{ url_for('view_report_pdf', user_id=user_id, report_id=report.report_id) }}" target="_blank">🖨️</a>

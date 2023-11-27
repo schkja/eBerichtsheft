@@ -3,7 +3,7 @@ eBerichtsheft.db
 legacy/
 .DS_Store
 .DS_Store
-.venv
+.venvs
 /venv
 venv/
 __pycache__
